@@ -2,6 +2,17 @@
 
 use Illuminate\Support\Str;
 
+function parse_db_url_value($dbUrl, $keyValPattern, $urlPattern, $envKey, $default) {
+    $envVal = env($envKey);
+    if ($envVal !== null && $envVal !== '') return $envVal;
+    if (!$dbUrl) return $default;
+    if (preg_match($keyValPattern, $dbUrl, $m)) return $m[1];
+    if ($urlPattern && preg_match($urlPattern, $dbUrl, $m)) return $m[1];
+    return $default;
+}
+
+$_dbUrl = env('DB_URL', '');
+
 return [
 
     /*
@@ -84,36 +95,11 @@ return [
 
         'pgsql' => [
             'driver' => 'pgsql',
-            'host' => env('DB_HOST') ?: (function() {
-                $url = env('DB_URL', '');
-                if (preg_match("/host=['\"]?([^'\"'\s,]+)/", $url, $m)) return $m[1];
-                if (preg_match('#postgresql://[^:]+:[^@]+@([^:]+)#', $url, $m)) return $m[1];
-                return '127.0.0.1';
-            })(),
-            'port' => env('DB_PORT') ?: (function() {
-                $url = env('DB_URL', '');
-                if (preg_match("/port=['\"]?([^'\"'\s,]+)/", $url, $m)) return $m[1];
-                if (preg_match('#postgresql://[^:]+:[^@]+@[^:]+:(\d+)#', $url, $m)) return $m[1];
-                return '5432';
-            })(),
-            'database' => env('DB_DATABASE') ?: (function() {
-                $url = env('DB_URL', '');
-                if (preg_match("/dbname=['\"]?([^'\"'\s,]+)/", $url, $m)) return $m[1];
-                if (preg_match('#postgresql://[^/]+/(\S+)#', $url, $m)) return $m[1];
-                return 'laravel';
-            })(),
-            'username' => env('DB_USERNAME') ?: (function() {
-                $url = env('DB_URL', '');
-                if (preg_match("/user=['\"]?([^'\"'\s,]+)/", $url, $m)) return $m[1];
-                if (preg_match('#postgresql://([^:]+):#', $url, $m)) return $m[1];
-                return 'root';
-            })(),
-            'password' => env('DB_PASSWORD') ?: (function() {
-                $url = env('DB_URL', '');
-                if (preg_match("/password=['\"]?([^'\"'\s,]+)/", $url, $m)) return $m[1];
-                if (preg_match('#postgresql://[^:]+:([^@]+)@#', $url, $m)) return $m[1];
-                return '';
-            })(),
+            'host' => parse_db_url_value($_dbUrl, "/host=['\"]?([^'\"'\s,]+)/", '#postgresql://[^:]+:[^@]+@([^:]+)#', 'DB_HOST', '127.0.0.1'),
+            'port' => parse_db_url_value($_dbUrl, "/port=['\"]?([^'\"'\s,]+)/", '#postgresql://[^:]+:[^@]+@[^:]+:(\d+)#', 'DB_PORT', '5432'),
+            'database' => parse_db_url_value($_dbUrl, "/dbname=['\"]?([^'\"'\s,]+)/", '#postgresql://[^/]+/(\S+)#', 'DB_DATABASE', 'laravel'),
+            'username' => parse_db_url_value($_dbUrl, "/user=['\"]?([^'\"'\s,]+)/", '#postgresql://([^:]+):#', 'DB_USERNAME', 'root'),
+            'password' => parse_db_url_value($_dbUrl, "/password=['\"]?([^'\"'\s,]+)/", '#postgresql://[^:]+:([^@]+)@#', 'DB_PASSWORD', ''),
             'charset' => env('DB_CHARSET', 'utf8'),
             'prefix' => '',
             'prefix_indexes' => true,
