@@ -1,0 +1,17 @@
+node_modules
+vendor
+.env
+.env.backup
+storage/logs/*
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+bootstrap/cache/*
+.git
+.gitignore
+.vscode
+.idea
+nova
+tests
+*.md
+docker-compose.yml
