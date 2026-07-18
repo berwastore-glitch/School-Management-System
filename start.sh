@@ -4,9 +4,6 @@ cd /var/www/html
 
 cp -n .env.example .env 2>/dev/null || true
 
-# Parse Render's DB_URL into .env using PHP
-php parse_db_url.php
-
 php artisan key:generate --force 2>&1 || true
 php artisan config:clear 2>&1
 php artisan config:cache 2>&1

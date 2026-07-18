@@ -84,11 +84,36 @@ return [
 
         'pgsql' => [
             'driver' => 'pgsql',
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '5432'),
-            'database' => env('DB_DATABASE', 'laravel'),
-            'username' => env('DB_USERNAME', 'root'),
-            'password' => env('DB_PASSWORD', ''),
+            'host' => env('DB_HOST') ?: (function() {
+                $url = env('DB_URL', '');
+                if (preg_match("/host=['\"]?([^'\"'\s,]+)/", $url, $m)) return $m[1];
+                if (preg_match('#postgresql://[^:]+:[^@]+@([^:]+)#', $url, $m)) return $m[1];
+                return '127.0.0.1';
+            })(),
+            'port' => env('DB_PORT') ?: (function() {
+                $url = env('DB_URL', '');
+                if (preg_match("/port=['\"]?([^'\"'\s,]+)/", $url, $m)) return $m[1];
+                if (preg_match('#postgresql://[^:]+:[^@]+@[^:]+:(\d+)#', $url, $m)) return $m[1];
+                return '5432';
+            })(),
+            'database' => env('DB_DATABASE') ?: (function() {
+                $url = env('DB_URL', '');
+                if (preg_match("/dbname=['\"]?([^'\"'\s,]+)/", $url, $m)) return $m[1];
+                if (preg_match('#postgresql://[^/]+/(\S+)#', $url, $m)) return $m[1];
+                return 'laravel';
+            })(),
+            'username' => env('DB_USERNAME') ?: (function() {
+                $url = env('DB_URL', '');
+                if (preg_match("/user=['\"]?([^'\"'\s,]+)/", $url, $m)) return $m[1];
+                if (preg_match('#postgresql://([^:]+):#', $url, $m)) return $m[1];
+                return 'root';
+            })(),
+            'password' => env('DB_PASSWORD') ?: (function() {
+                $url = env('DB_URL', '');
+                if (preg_match("/password=['\"]?([^'\"'\s,]+)/", $url, $m)) return $m[1];
+                if (preg_match('#postgresql://[^:]+:([^@]+)@#', $url, $m)) return $m[1];
+                return '';
+            })(),
             'charset' => env('DB_CHARSET', 'utf8'),
             'prefix' => '',
             'prefix_indexes' => true,
