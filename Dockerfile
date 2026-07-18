@@ -14,8 +14,13 @@ RUN composer install --no-dev --optimize-autoloader --no-scripts
 
 COPY . .
 
-RUN composer dump-autoload --optimize
+RUN composer dump-autoload --optimize \
+    && mkdir -p storage/framework/{cache/data,sessions,views} \
+    && mkdir -p bootstrap/cache \
+    && chmod -R 775 storage bootstrap/cache
+
+RUN chmod +x start.sh
 
 EXPOSE 8000
 
-CMD ["sh", "-c", "php artisan key:generate --force && php artisan config:clear && php artisan migrate --force && php artisan config:cache && php artisan route:cache && php artisan view:cache && php artisan storage:link 2>/dev/null; php artisan serve --host=0.0.0.0 --port=${PORT:-8000}"]
+CMD ["./start.sh"]
