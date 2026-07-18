@@ -6,49 +6,59 @@ $db   = getenv('DB_DATABASE');
 $user = getenv('DB_USERNAME');
 $pass = getenv('DB_PASSWORD');
 
+echo "Connecting: host={$host} port={$port} db={$db} user={$user}\n";
+
 try {
     $pdo = new PDO("pgsql:host={$host};port={$port};dbname={$db}", $user, $pass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $count = $pdo->query("SELECT count(*) FROM users")->fetchColumn();
-    echo "Current users: {$count}\n";
+    $count = (int)$pdo->query("SELECT count(*) FROM users")->fetchColumn();
+    echo "Users in DB: {$count}\n";
 
     if ($count > 0) {
-        echo "Users already exist. Skipping.\n";
+        echo "Seed already done.\n";
         exit(0);
     }
 
-    // Hash for 'password'
     $hash = password_hash('password', PASSWORD_BCRYPT);
     $now = date('Y-m-d H:i:s');
 
     // Create school
-    $stmt = $pdo->prepare("INSERT INTO schools (name, slug, email, phone, address, is_active, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT (slug) DO NOTHING RETURNING id");
-    $stmt->execute(['Kigali International School', 'kigali-international-school', 'info@kigali-school.com', '+250 788 123 456', 'Kigali, Rwanda', true, $now, $now]);
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    if ($row) {
-        $schoolId = $row['id'];
-    } else {
-        $schoolId = $pdo->query("SELECT id FROM schools WHERE slug='kigali-international-school'")->fetchColumn();
+    $schoolId = null;
+    try {
+        $stmt = $pdo->prepare("INSERT INTO schools (name, slug, email, phone, address, is_active, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id");
+        $stmt->execute(['Kigali International School', 'kigali-international-school', 'info@kigali-school.com', '+250 788 123 456', 'Kigali, Rwanda', true, $now, $now]);
+        $schoolId = $stmt->fetchColumn();
+        echo "Created school ID: {$schoolId}\n";
+    } catch (Exception $e) {
+        echo "School insert error: " . $e->getMessage() . "\n";
+        $schoolId = $pdo->query("SELECT id FROM schools LIMIT 1")->fetchColumn();
+        echo "Using existing school ID: {$schoolId}\n";
     }
-    echo "School ID: {$schoolId}\n";
 
-    // Create users
+    // Create users one by one
     $users = [
-        ['Super Admin', 'admin@schoolms.com', $hash, 'super_admin', '+1 (555) 000-0000', 'SchoolMS Headquarters'],
-        ['School Admin', 'school@schoolms.com', $hash, 'admin', '+1 (555) 000-0001', 'Demo International School'],
-        ['Test Student', 'student@test.com', $hash, 'student', null, null],
-        ['Test Teacher', 'teacher@test.com', $hash, 'teacher', null, null],
+        ['Super Admin', 'admin@schoolms.com', 'super_admin'],
+        ['School Admin', 'school@schoolms.com', 'admin'],
+        ['Test Student', 'student@test.com', 'student'],
+        ['Test Teacher', 'teacher@test.com', 'teacher'],
     ];
 
-    foreach ($users as $u) {
-        $stmt = $pdo->prepare("INSERT INTO users (name, email, password, role, phone, school_name, email_verified_at, school_id, created_at, updated_at) SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?, ? WHERE NOT EXISTS (SELECT 1 FROM users WHERE email = ?)");
-        $stmt->execute([$u[0], $u[1], $u[2], $u[3], $u[4], $u[5], $now, $schoolId, $now, $now, $u[1]]);
-        echo "Created: {$u[0]} ({$u[1]})\n";
+    foreach ($users as [$name, $email, $role]) {
+        try {
+            $stmt = $pdo->prepare("INSERT INTO users (name, email, password, role, email_verified_at, school_id, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->execute([$name, $email, $hash, $role, $now, $schoolId, $now, $now]);
+            echo "OK: {$name} ({$email})\n";
+        } catch (Exception $e) {
+            echo "SKIP: {$email} - " . $e->getMessage() . "\n";
+        }
     }
 
-    echo "Seeding complete!\n";
+    $final = (int)$pdo->query("SELECT count(*) FROM users")->fetchColumn();
+    echo "Total users now: {$final}\n";
+    echo "DONE\n";
+
 } catch (Exception $e) {
-    echo "ERROR: " . $e->getMessage() . "\n";
+    echo "FATAL: " . $e->getMessage() . "\n";
     exit(1);
 }
