@@ -196,7 +196,12 @@ class DatabaseSeeder extends Seeder
             foreach (Exam::where('class_id',$classes['S1A']->id)->get() as $ex) {
                 foreach ($s1a as $s) {
                     $mk = rand(25,98);
-                    $gr = match(true){$mk>=80=>'A';$mk>=70=>'B';$mk>=60=>'C';$mk>=50=>'D';$mk>=40=>'E';default=>'F';};
+                    if ($mk >= 80) { $gr = 'A'; }
+                    elseif ($mk >= 70) { $gr = 'B'; }
+                    elseif ($mk >= 60) { $gr = 'C'; }
+                    elseif ($mk >= 50) { $gr = 'D'; }
+                    elseif ($mk >= 40) { $gr = 'E'; }
+                    else { $gr = 'F'; }
                     Result::firstOrCreate(['exam_id'=>$ex->id,'student_id'=>$s->id], [
                         'subject_id'=>$ex->subject_id,'marks_obtained'=>$mk,'grade'=>$gr,'status'=>true,'term'=>$ex->term,'school_id'=>$sid,
                     ]);
