@@ -9,9 +9,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('subjects', function (Blueprint $table) {
-            $table->dropIndex('subjects_class_id_foreign');
-            $table->dropIndex('subjects_teacher_id_foreign');
-            $table->dropColumn(['class_id', 'teacher_id']);
+            if (Schema::hasColumn('subjects', 'class_id')) {
+                $table->dropForeign(['class_id']);
+                $table->dropColumn('class_id');
+            }
+            if (Schema::hasColumn('subjects', 'teacher_id')) {
+                $table->dropForeign(['teacher_id']);
+                $table->dropColumn('teacher_id');
+            }
         });
     }
 
