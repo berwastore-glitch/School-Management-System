@@ -10,13 +10,13 @@ return new class extends Migration
     {
         Schema::table('classes', function (Blueprint $table) {
             if (!Schema::hasColumn('classes', 'curriculum_id')) {
-                $table->foreignId('curriculum_id')->nullable()->after('teacher_id')->constrained('curriculums')->nullOnDelete();
+                $table->foreignId('curriculum_id')->nullable()->constrained('curriculums')->nullOnDelete();
             }
             if (!Schema::hasColumn('classes', 'grade_level_id')) {
-                $table->foreignId('grade_level_id')->nullable()->after('curriculum_id')->constrained()->nullOnDelete();
+                $table->foreignId('grade_level_id')->nullable()->constrained()->nullOnDelete();
             }
             if (!Schema::hasColumn('classes', 'academic_year_id')) {
-                $table->foreignId('academic_year_id')->nullable()->after('grade_level_id')->constrained()->nullOnDelete();
+                $table->foreignId('academic_year_id')->nullable()->constrained()->nullOnDelete();
             }
         });
     }

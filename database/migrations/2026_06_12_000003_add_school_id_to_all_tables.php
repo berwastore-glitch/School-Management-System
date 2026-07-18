@@ -12,7 +12,7 @@ return new class extends Migration
 
         foreach ($tables as $table) {
             Schema::table($table, function (Blueprint $table) {
-                $table->foreignId('school_id')->nullable()->after('id')->constrained()->nullOnDelete();
+                $table->foreignId('school_id')->nullable()->constrained()->nullOnDelete();
                 $table->index('school_id');
             });
         }
