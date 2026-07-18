@@ -28,7 +28,7 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $fee->student->first_name ?? 'N/A' }} {{ $fee->student->last_name ?? '' }}</td>
                         <td>{{ $fee->fee_type }}</td>
-                        <td>${{ number_format($fee->amount, 2) }}</td>
+                        <td>RWF {{ number_format($fee->amount, 2) }}</td>
                         <td>{{ $fee->due_date ? \Carbon\Carbon::parse($fee->due_date)->format('M d, Y') : 'N/A' }}</td>
                         <td>
                             @php

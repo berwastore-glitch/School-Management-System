@@ -41,10 +41,10 @@
     <div class="col-md-3">
         <div class="stat-card d-flex align-items-center gap-3">
             <div class="stat-icon" style="background:#EDE9FE;color:#7C3AED;">
-                <i class="fas fa-dollar-sign"></i>
+                <i class="fas fa-money-bill"></i>
             </div>
             <div>
-                <div class="stat-number">${{ number_format($pendingFees, 2) }}</div>
+                <div class="stat-number">RWF {{ number_format($pendingFees, 2) }}</div>
                 <div class="stat-label">Pending Fees</div>
             </div>
         </div>
@@ -197,15 +197,15 @@
             <div class="card-body">
                 <div class="row text-center">
                     <div class="col-4">
-                        <div class="fw-bold fs-5" style="color:#10B981;">${{ number_format($paidFees, 2) }}</div>
+                        <div class="fw-bold fs-5" style="color:#10B981;">RWF {{ number_format($paidFees, 2) }}</div>
                         <div class="small text-muted">Paid</div>
                     </div>
                     <div class="col-4">
-                        <div class="fw-bold fs-5" style="color:#D97706;">${{ number_format($pendingFees, 2) }}</div>
+                        <div class="fw-bold fs-5" style="color:#D97706;">RWF {{ number_format($pendingFees, 2) }}</div>
                         <div class="small text-muted">Pending</div>
                     </div>
                     <div class="col-4">
-                        <div class="fw-bold fs-5" style="color:#EF4444;">${{ number_format($totalFees - $paidFees - $pendingFees, 2) }}</div>
+                        <div class="fw-bold fs-5" style="color:#EF4444;">RWF {{ number_format($totalFees - $paidFees - $pendingFees, 2) }}</div>
                         <div class="small text-muted">Overdue</div>
                     </div>
                 </div>

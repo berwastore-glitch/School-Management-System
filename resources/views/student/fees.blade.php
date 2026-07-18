@@ -8,10 +8,10 @@
     <div class="col-md-3">
         <div class="stat-card d-flex align-items-center gap-3">
             <div class="stat-icon" style="background:#DBEAFE;color:#2563EB;">
-                <i class="fas fa-dollar-sign"></i>
+                <i class="fas fa-money-bill"></i>
             </div>
             <div>
-                <div class="stat-number">${{ number_format($totalAmount, 2) }}</div>
+                <div class="stat-number">RWF {{ number_format($totalAmount, 2) }}</div>
                 <div class="stat-label">Total Fees</div>
             </div>
         </div>
@@ -22,7 +22,7 @@
                 <i class="fas fa-check-circle"></i>
             </div>
             <div>
-                <div class="stat-number">${{ number_format($paidAmount, 2) }}</div>
+                <div class="stat-number">RWF {{ number_format($paidAmount, 2) }}</div>
                 <div class="stat-label">Paid</div>
             </div>
         </div>
@@ -33,7 +33,7 @@
                 <i class="fas fa-hourglass-half"></i>
             </div>
             <div>
-                <div class="stat-number">${{ number_format($pendingAmount, 2) }}</div>
+                <div class="stat-number">RWF {{ number_format($pendingAmount, 2) }}</div>
                 <div class="stat-label">Pending</div>
             </div>
         </div>
@@ -44,7 +44,7 @@
                 <i class="fas fa-exclamation-triangle"></i>
             </div>
             <div>
-                <div class="stat-number">${{ number_format($overdueAmount, 2) }}</div>
+                <div class="stat-number">RWF {{ number_format($overdueAmount, 2) }}</div>
                 <div class="stat-label">Overdue</div>
             </div>
         </div>
@@ -72,7 +72,7 @@
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td class="fw-semibold">{{ ucfirst($fee->fee_type) }}</td>
-                        <td>${{ number_format($fee->amount, 2) }}</td>
+                        <td>RWF {{ number_format($fee->amount, 2) }}</td>
                         <td>{{ \Carbon\Carbon::parse($fee->due_date)->format('M d, Y') }}</td>
                         <td>{{ $fee->paid_date ? \Carbon\Carbon::parse($fee->paid_date)->format('M d, Y') : '-' }}</td>
                         <td>{{ ucfirst($fee->payment_method ?? '-') }}</td>

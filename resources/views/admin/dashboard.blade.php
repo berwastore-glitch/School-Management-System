@@ -41,10 +41,10 @@
     <div class="col-md-3">
         <div class="stat-card d-flex align-items-center gap-3">
             <div class="stat-icon" style="background:#EDE9FE;color:#7C3AED;">
-                <i class="fas fa-dollar-sign"></i>
+                <i class="fas fa-money-bill"></i>
             </div>
             <div>
-                <div class="stat-number">${{ number_format($totalFees ?? 0, 2) }}</div>
+                <div class="stat-number">RWF {{ number_format($totalFees ?? 0, 2) }}</div>
                 <div class="stat-label">Fees Collected</div>
             </div>
         </div>
@@ -216,7 +216,7 @@ document.addEventListener('DOMContentLoaded', function() {
         data: {
             labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
             datasets: [{
-                label: 'Fees Collected ($)',
+                label: 'Fees Collected (RWF)',
                 data: {!! json_encode($monthlyFees && count($monthlyFees) ? array_values($monthlyFees) : [0,0,0,0,0,0]) !!},
                 backgroundColor: '#D97706',
                 borderRadius: 6

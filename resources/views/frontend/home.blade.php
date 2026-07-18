@@ -82,7 +82,7 @@
                         <div class="col-6">
                             <div class="mockup-stat-card">
                                 <div class="mockup-stat-icon"><i class="fas fa-credit-card"></i></div>
-                                <div class="mockup-stat-number">$<span class="counter" data-target="128">0</span>K</div>
+                                <div class="mockup-stat-number">RWF <span class="counter" data-target="128">0</span>M</div>
                                 <div class="mockup-stat-label">Fees Collected</div>
                             </div>
                         </div>
@@ -480,7 +480,7 @@
                 <div class="pricing-card">
                     <div class="pricing-header">
                         <h5>Basic</h5>
-                        <div class="price">$29<span>/mo</span></div>
+                        <div class="price">RWF 29,000<span>/mo</span></div>
                         <div class="description">Perfect for small schools</div>
                     </div>
                     <div class="pricing-body">
@@ -504,7 +504,7 @@
                 <div class="pricing-card featured">
                     <div class="pricing-header">
                         <h5>Professional</h5>
-                        <div class="price">$79<span>/mo</span></div>
+                        <div class="price">RWF 79,000<span>/mo</span></div>
                         <div class="description">Best for growing schools</div>
                     </div>
                     <div class="pricing-body">
@@ -528,7 +528,7 @@
                 <div class="pricing-card">
                     <div class="pricing-header">
                         <h5>Enterprise</h5>
-                        <div class="price">$199<span>/mo</span></div>
+                        <div class="price">RWF 199,000<span>/mo</span></div>
                         <div class="description">For large institutions</div>
                     </div>
                     <div class="pricing-body">

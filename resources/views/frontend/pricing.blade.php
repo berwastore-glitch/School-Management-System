@@ -184,7 +184,7 @@
                         <h5 class="fw-bold mb-1" style="color: #0A2342;">Basic</h5>
                         <p class="text-muted small mb-3">For small schools</p>
                         <div class="mb-3">
-                            <span class="price-amount" id="basic-price">$29</span>
+                            <span class="price-amount" id="basic-price">RWF 29,000</span>
                             <span class="price-period" id="basic-period">/mo</span>
                         </div>
                         <p class="text-muted small mb-3">Student Management <span class="fw-semibold">(up to 500)</span></p>
@@ -207,7 +207,7 @@
                         <h5 class="fw-bold mb-1" style="color: #0A2342;">Professional</h5>
                         <p class="text-muted small mb-3">For growing schools</p>
                         <div class="mb-3">
-                            <span class="price-amount" id="pro-price">$79</span>
+                            <span class="price-amount" id="pro-price">RWF 79,000</span>
                             <span class="price-period" id="pro-period">/mo</span>
                         </div>
                         <p class="text-muted small mb-3">All Basic Features <span class="fw-semibold">(unlimited students)</span></p>
@@ -230,7 +230,7 @@
                         <h5 class="fw-bold mb-1" style="color: #0A2342;">Enterprise</h5>
                         <p class="text-muted small mb-3">For large institutions</p>
                         <div class="mb-3">
-                            <span class="price-amount" id="enterprise-price">$199</span>
+                            <span class="price-amount" id="enterprise-price">RWF 199,000</span>
                             <span class="price-period" id="enterprise-period">/mo</span>
                         </div>
                         <p class="text-muted small mb-3">Full Modules <span class="fw-semibold">(Library, Transport)</span></p>
@@ -379,10 +379,10 @@
                 var periodEl = card.querySelector('.price-period');
 
                 if (isAnnual) {
-                    priceEl.textContent = '$' + annual;
+                    priceEl.textContent = 'RWF ' + annual.toLocaleString();
                     periodEl.textContent = '/yr';
                 } else {
-                    priceEl.textContent = '$' + monthly;
+                    priceEl.textContent = 'RWF ' + monthly.toLocaleString();
                     periodEl.textContent = '/mo';
                 }
             });

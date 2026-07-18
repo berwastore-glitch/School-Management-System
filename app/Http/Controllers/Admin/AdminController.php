@@ -434,7 +434,7 @@ class AdminController extends Controller
 
     public function destroyPayment(Fee $fee)
     {
-        $feeName = $fee->fee_type . ' - $' . $fee->amount;
+        $feeName = $fee->fee_type . ' - RWF ' . number_format($fee->amount, 0);
         ActivityLogService::log('deleted', "Deleted fee record: {$feeName}", $fee, $fee->toArray());
         $fee->delete();
         return redirect()->route('admin.fees')->with('success', 'Payment deleted successfully.');

@@ -46,10 +46,10 @@
     <div class="col-md-3">
         <div class="stat-card d-flex align-items-center gap-3">
             <div class="stat-icon" style="background:#EDE9FE;color:#7C3AED;">
-                <i class="fas fa-dollar-sign"></i>
+                <i class="fas fa-money-bill"></i>
             </div>
             <div>
-                <div class="stat-number">${{ number_format($totalCollected ?? 0, 2) }}</div>
+                <div class="stat-number">RWF {{ number_format($totalCollected ?? 0, 2) }}</div>
                 <div class="stat-label">Total Collected</div>
             </div>
         </div>
@@ -77,7 +77,7 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $fee->student->first_name ?? 'N/A' }} {{ $fee->student->last_name ?? '' }}</td>
                         <td>{{ $fee->fee_type ?? 'N/A' }}</td>
-                        <td>${{ number_format($fee->amount ?? 0, 2) }}</td>
+                        <td>RWF {{ number_format($fee->amount ?? 0, 2) }}</td>
                         <td>{{ $fee->due_date ?? 'N/A' }}</td>
                         <td>
                             <span class="badge {{ $fee->payment_status === 'paid' ? 'badge-success' : ($fee->payment_status === 'overdue' ? 'badge-danger' : 'badge-warning') }}">
@@ -86,7 +86,7 @@
                         </td>
                         <td>
                             <div class="btn-group btn-group-sm">
-                                <button type="button" class="btn btn-info" title="Print Receipt" onclick="printReceipt(this)" data-student="{{ $fee->student->first_name ?? '' }} {{ $fee->student->last_name ?? '' }}" data-admission="{{ $fee->student->admission_number ?? '' }}" data-type="{{ $fee->fee_type ?? '' }}" data-amount="${{ number_format($fee->amount ?? 0, 2) }}" data-due="{{ $fee->due_date ?? '' }}" data-status="{{ ucfirst($fee->payment_status ?? 'pending') }}" data-method="{{ $fee->payment_method ?? 'N/A' }}" data-date="{{ $fee->paid_date ?? 'N/A' }}" data-txn="{{ $fee->transaction_id ?? 'N/A' }}" data-remark="{{ $fee->remark ?? '' }}"><i class="fas fa-print"></i></button>
+                                <button type="button" class="btn btn-info" title="Print Receipt" onclick="printReceipt(this)" data-student="{{ $fee->student->first_name ?? '' }} {{ $fee->student->last_name ?? '' }}" data-admission="{{ $fee->student->admission_number ?? '' }}" data-type="{{ $fee->fee_type ?? '' }}" data-amount="RWF {{ number_format($fee->amount ?? 0, 2) }}" data-due="{{ $fee->due_date ?? '' }}" data-status="{{ ucfirst($fee->payment_status ?? 'pending') }}" data-method="{{ $fee->payment_method ?? 'N/A' }}" data-date="{{ $fee->paid_date ?? 'N/A' }}" data-txn="{{ $fee->transaction_id ?? 'N/A' }}" data-remark="{{ $fee->remark ?? '' }}"><i class="fas fa-print"></i></button>
                                 <a href="{{ route('admin.fees.edit', $fee) }}" class="btn btn-warning" title="Edit"><i class="fas fa-edit"></i></a>
                                 <form action="{{ route('admin.fees.destroy', $fee) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this payment?')">
                                     @csrf @method('DELETE')
