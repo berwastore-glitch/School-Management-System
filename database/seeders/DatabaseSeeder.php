@@ -12,7 +12,11 @@ class DatabaseSeeder extends Seeder
 {
     private function log($msg): void
     {
-        $this->command?->info($msg) ?? print "$msg\n";
+        if ($this->command) {
+            $this->command->info($msg);
+        } else {
+            print "$msg\n";
+        }
     }
 
     public function run(): void
