@@ -2,17 +2,6 @@
 
 use Illuminate\Support\Str;
 
-function parse_db_url_value($dbUrl, $keyValPattern, $urlPattern, $envKey, $default) {
-    $envVal = env($envKey);
-    if ($envVal !== null && $envVal !== '') return $envVal;
-    if (!$dbUrl) return $default;
-    if (preg_match($keyValPattern, $dbUrl, $m)) return $m[1];
-    if ($urlPattern && preg_match($urlPattern, $dbUrl, $m)) return $m[1];
-    return $default;
-}
-
-$_dbUrl = env('DB_URL', '');
-
 return [
 
     /*
@@ -95,11 +84,11 @@ return [
 
         'pgsql' => [
             'driver' => 'pgsql',
-            'host' => parse_db_url_value($_dbUrl, "/host=['\"]?([^'\"'\s,]+)/", '#postgresql://[^:]+:[^@]+@([^:]+)#', 'DB_HOST', '127.0.0.1'),
-            'port' => parse_db_url_value($_dbUrl, "/port=['\"]?([^'\"'\s,]+)/", '#postgresql://[^:]+:[^@]+@[^:]+:(\d+)#', 'DB_PORT', '5432'),
-            'database' => parse_db_url_value($_dbUrl, "/dbname=['\"]?([^'\"'\s,]+)/", '#postgresql://[^/]+/(\S+)#', 'DB_DATABASE', 'laravel'),
-            'username' => parse_db_url_value($_dbUrl, "/user=['\"]?([^'\"'\s,]+)/", '#postgresql://([^:]+):#', 'DB_USERNAME', 'root'),
-            'password' => parse_db_url_value($_dbUrl, "/password=['\"]?([^'\"'\s,]+)/", '#postgresql://[^:]+:([^@]+)@#', 'DB_PASSWORD', ''),
+            'host' => env('DB_HOST', '127.0.0.1'),
+            'port' => env('DB_PORT', '5432'),
+            'database' => env('DB_DATABASE', 'laravel'),
+            'username' => env('DB_USERNAME', 'root'),
+            'password' => env('DB_PASSWORD', ''),
             'charset' => env('DB_CHARSET', 'utf8'),
             'prefix' => '',
             'prefix_indexes' => true,
