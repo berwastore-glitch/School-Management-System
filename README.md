@@ -1,66 +1,251 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# SchoolMS - School Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A full-stack, multi-school management platform built with Laravel 12. Manage students, teachers, classes, attendance, exams, fees, and report cards — all in one place.
 
-## About Laravel
+**[Live Demo](https://school-management-system-syiu.onrender.com)** · **[GitHub Repository](https://github.com/berwastore-glitch/School-Management-System)**
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Student Management
+- Student registration with admission number, class assignment, and profile management
+- Student directory with search, filter, and pagination
+- Individual student profiles with attendance history, results, and fee status
 
-## Learning Laravel
+### Teacher Management
+- Teacher registration with employee ID, qualifications, and subject assignment
+- Teacher directory with detailed profiles
+- Subject-teacher-class assignment via pivot relationships
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Class Management
+- Create and manage classes with sections, capacity, and assigned class teachers
+- Link classes to curricula, grade levels, and academic years
+- View class details with enrolled students
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Attendance Tracking
+- Daily attendance marking (present, absent, late) per class
+- Edit and delete attendance records
+- Attendance reports with trends and statistics
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Examination Module
+- Create exams with subject, date, time, total marks, and passing marks
+- Enter and manage student marks per exam
+- Automatic grade calculation based on configurable grading scales
+- Exam results with student ranking and report card generation
 
-## Laravel Sponsors
+### Fee Management
+- Record fee payments (tuition, registration, laboratory, library, sports)
+- Track paid, pending, and overdue fees per student
+- Print payment receipts
+- Fee collection overview with charts
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Academic Structure
+- **Curricula**: CBC (Competency Based Curriculum), IB, and custom curricula
+- **Academic Years**: Define school years with start/end dates
+- **Terms**: Break academic years into terms
+- **Grade Levels**: Organize grades within curricula
+- **Grading Scales**: Configurable grade letters (A–F) with percentage ranges and grade points
 
-### Premium Partners
+### Report Cards
+- Premium A4-formatted report cards with school logo
+- Student ranking within class
+- Attendance summary and teacher/principal signatures
+- QR code verification
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### Multi-School Architecture
+- Shared database with school-scoped data isolation
+- School context middleware for automatic filtering
+- Per-school settings and branding
 
-## Contributing
+### Role-Based Access Control
+- **Super Admin**: Full system access across all schools
+- **Admin**: School-level management (students, teachers, classes, fees, exams)
+- **Teacher**: Class-level access (mark attendance, enter marks, view students)
+- **Student**: Personal dashboard (view results, attendance, fees, exams)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Activity Log
+- Track all user actions with timestamps
+- Filterable activity history per school
 
-## Code of Conduct
+### Dashboard & Analytics
+- Role-specific dashboards with key metrics
+- Attendance trend charts (line graphs)
+- Fee collection trends (bar charts)
+- Fee breakdown (doughnut charts)
+- Recent activity feed
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## Tech Stack
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+| Layer | Technology |
+|-------|-----------|
+| **Backend** | Laravel 12 (PHP 8.2) |
+| **Frontend** | Blade Templates, Tailwind CSS 3, Alpine.js |
+| **Build Tool** | Vite 6 |
+| **Database** | PostgreSQL (production), SQLite (local) |
+| **Auth** | Laravel Breeze |
+| **Charts** | Chart.js |
+| **Icons** | Font Awesome 6 |
+| **Deployment** | Docker on Render |
+| **Version Control** | Git / GitHub |
+
+---
+
+## Project Structure
+
+```
+SchoolMS/
+├── app/
+│   ├── Http/
+│   │   └── Controllers/
+│   │       ├── Admin/          # Admin CRUD controllers
+│   │       ├── Student/        # Student-facing controllers
+│   │       └── Teacher/        # Teacher-facing controllers
+│   ├── Models/                 # Eloquent models (16 total)
+│   ├── Services/               # DashboardService
+│   └── Traits/                 # SchoolScoped, NeedsSchool
+├── database/
+│   ├── migrations/             # 20+ migrations
+│   └── seeders/                # DatabaseSeeder with full sample data
+├── resources/
+│   └── views/
+│       ├── admin/              # 42 admin views
+│       ├── student/            # 7 student views
+│       ├── teacher/            # 18 teacher views
+│       ├── frontend/           # Landing page & pricing
+│       └── layouts/            # Role-specific layouts
+├── routes/
+│   └── web.php                 # All route definitions
+├── Dockerfile                  # PHP 8.2-cli with PostgreSQL
+├── start.sh                    # Container startup script
+└── composer.json
+```
+
+---
+
+## Local Development
+
+### Prerequisites
+
+- PHP 8.2+
+- Composer
+- Node.js 18+
+- SQLite (default) or PostgreSQL
+
+### Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/berwastore-glitch/School-Management-System.git
+cd School-Management-System
+
+# Install PHP dependencies
+composer install
+
+# Install JS dependencies
+npm install
+
+# Create environment file
+cp .env.example .env
+
+# Generate application key
+php artisan key:generate
+
+# Run migrations and seed
+php artisan migrate --seed
+
+# Build frontend assets
+npm run build
+
+# Start the development server
+php artisan serve
+```
+
+The app will be available at `http://localhost:8000`.
+
+### Default Login Credentials
+
+| Role | Email | Password |
+|------|-------|----------|
+| Super Admin | `admin@schoolms.com` | `password` |
+| School Admin | `school@schoolms.com` | `password` |
+| Teacher | `teacher@test.com` | `password` |
+| Student | `student@test.com` | `password` |
+
+---
+
+## Production Deployment (Render)
+
+### Environment Variables
+
+Set these in the Render dashboard:
+
+| Variable | Value |
+|----------|-------|
+| `APP_KEY` | Generate with `php artisan key:generate` |
+| `APP_DEBUG` | `false` |
+| `APP_URL` | `https://your-app.onrender.com` |
+| `DB_HOST` | Your Render PostgreSQL host |
+| `DB_PORT` | `5432` |
+| `DB_DATABASE` | Your database name |
+| `DB_USERNAME` | Your database user |
+| `DB_PASSWORD` | Your database password |
+| `SESSION_DRIVER` | `database` |
+| `CACHE_STORE` | `database` |
+
+### Deploy
+
+1. Push to GitHub
+2. Create a **Web Service** on Render
+3. Connect your GitHub repository
+4. Render will auto-build using the `Dockerfile`
+5. The `start.sh` script handles migrations, seeding, and server startup
+
+---
+
+## Database Schema
+
+Key tables with their relationships:
+
+```
+School ──< User
+School ──< Teacher ──< User
+School ──< Student ──< User
+School ──< SchoolClass ──< Teacher
+SchoolClass ──< Student
+SchoolClass ──< Exam ──< Subject
+Student ──< Attendance
+Student ──< Result ──< Exam
+Student ──< Fee
+School ──< Curriculum ──< GradeLevel
+School ──< AcademicYear ──< Term
+```
+
+---
+
+## API Routes
+
+| Route | Method | Description |
+|-------|--------|-------------|
+| `/` | GET | Public landing page |
+| `/login` | GET/POST | Authentication |
+| `/admin/dashboard` | GET | Admin dashboard |
+| `/admin/students` | GET | Student management |
+| `/admin/teachers` | GET | Teacher management |
+| `/admin/classes` | GET | Class management |
+| `/admin/attendance` | GET | Attendance tracking |
+| `/admin/exams` | GET | Examination management |
+| `/admin/fees` | GET | Fee management |
+| `/admin/curriculums` | GET | Curriculum management |
+| `/admin/academic-years` | GET | Academic year management |
+| `/teacher/dashboard` | GET | Teacher dashboard |
+| `/student/dashboard` | GET | Student dashboard |
+| `/profile/edit` | GET/POST | Profile management |
+
+---
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+MIT License. See [LICENSE](LICENSE) for details.
